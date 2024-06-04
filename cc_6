@@ -55,7 +55,7 @@ U99350821
                 ctx.closePath();
             }
 
-            // Overhere I have used the Update method to move the ball and handle collision detection
+            // using the Update method to move the ball and handle collision detection
             update(canvas) {
                 // In the below line I have checked for collision with canvas edges and reverse direction if necessary
                 if ((this.x + this.radius > canvas.width) || (this.x - this.radius < 0)) {
@@ -71,7 +71,7 @@ U99350821
             } 
         }
 
-        // I extracted the canvas element and context
+        //  extracted the canvas element and context
         const canvas = document.getElementById('ballCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -85,7 +85,7 @@ U99350821
             ball.update(canvas); 
         }
 
-        // I ran the animation loop every 16 millisecond, this approximately translates to 60 frames per second
+        // ran the animation loop every 16 millisecond, this approximately translates to 60 frames per second
         setInterval(animate, 16);
     </script>
 </body>

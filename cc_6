@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouncing Ball Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ffcc33 0%, #ff6666 100%);
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 5px solid #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        h1 {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bouncing Ball Animation</h1>
+    <canvas id="ballCanvas" width="800" height="600"></canvas>
+    <script>
+        class Ball {
+            constructor(x, y, radius, dx, dy, color) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.dx = dx;
+                this.dy = dy;
+                this.color = color;
+            }
+
+            // I have drawn a method to render the ball on the canvas
+            draw(ctx) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.closePath();
+            }
+
+            // Overhere I have used the Update method to move the ball and handle collision detection
+            update(canvas) {
+                // In the below line I have checked for collision with canvas edges and reverse direction if necessary
+                if ((this.x + this.radius > canvas.width) || (this.x - this.radius < 0)) {
+                    this.dx = -this.dx;
+                }
+                if ((this.y + this.radius > canvas.height) || (this.y - this.radius < 0)) {
+                    this.dy = -this.dy;
+                }
+
+                // Updated the ball position
+                this.x += this.dx;
+                this.y += this.dy;
+            } 
+        }
+
+        // I extracted the canvas element and context
+        const canvas = document.getElementById('ballCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Created a new Ball object with the test data
+        const ball = new Ball(200, 160, 20, 2, 2, 'red');
+
+        // Animation loop using setInterval
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // this will clear the canvas
+            ball.draw(ctx); 
+            ball.update(canvas); 
+        }
+
+        // I ran the animation loop every 16 millisecond, this approximately translates to 60 frames per second
+        setInterval(animate, 16);
+    </script>
+</body>
+</html>
